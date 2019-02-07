@@ -1,3 +1,4 @@
+# Assignment 1, Question 2; Douglas Schumacher, CS 639, February 2019
 import sys
 
 
@@ -13,7 +14,7 @@ def create_sent_dict(sentiment_file):
     """
     scores = {}
     
-    YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
     
     return scores
 
@@ -30,7 +31,7 @@ def get_tweet_sentiment(tweet, sent_scores):
         """
     score = 0
     
-    YOUR CODE GOES HERE
+    # YOUR CODE GOES HERE
     
     return score
 

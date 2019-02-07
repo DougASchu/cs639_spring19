@@ -8,11 +8,11 @@ def preprocess_word(word):
 
     # Convert more than 2 letter repetitions to 2 letter. Example: funnnnny --> funny
     #TODO: The next line should implement the functionality in the above comment.
-    word = YOUR CODE GOES HERE
+    # word = YOUR CODE GOES HERE
 
     # Remove - & '
     # TODO: The next line should implement the functionality in the above comment.
-    word = YOUR CODE GOES HERE
+    # word = YOUR CODE GOES HERE
     return word
 
 
@@ -47,16 +47,13 @@ def preprocess_tweet(tweet):
     tweet = re.sub(r'@[\S]+', '', tweet)
 
     # Replaces #hashtag with hashtag. Example #DataScience should be DataScience
-    # TODO: The next line should implement the functionality in the above comment.
-    tweet = YOUR CODE GOES HERE    
+    tweet = re.sub(r'#[\S]+', '', tweet)   
 
     # Remove RT (retweet)
-    # TODO: The next line should implement the functionality in the above comment.
-    tweet = YOUR CODE GOES HERE
+    tweet = re.sub(r'rt', '', tweet)
     
     # Replace 2+ dots with space
-    # TODO: The next line should implement the functionality in the above commen
-    tweet = YOUR CODE GOES HERE
+    tweet = re.sub(r'[\.] + [\.]', '', tweet)
     
     # Strip space, " and ' from tweet
     tweet = tweet.strip(' "\'')

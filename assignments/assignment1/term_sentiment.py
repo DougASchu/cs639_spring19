@@ -1,3 +1,4 @@
+# Assignment 1, Question 3; Douglas Schumacher, CS 639, February 2019
 import sys
 
 def create_sent_dict(sentiment_file):

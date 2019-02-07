@@ -12,9 +12,12 @@ def create_sent_dict(sentiment_file):
         Returns:
             dicitonary: A dictionary with schema d[term] = score
     """
-    scores = {}
-    
-    # YOUR CODE GOES HERE
+    afinnfile = open(sentiment_file, 'r')
+    scores = {} # initialize an empty dictionary
+    for line in afinnfile:
+        term, score = line.split("\t") # The file is tab-delimited and "\t" means tab character
+        scores[term] = int(score) # Convert the score to an integer. It was parsed as a string.
+    afinnfile.close()
     
     return scores
 
@@ -30,9 +33,22 @@ def get_tweet_sentiment(tweet, sent_scores):
                 score (numeric): The sentiment score of the tweet
         """
     score = 0
+    tweet_left = tweet # Copy of tweet that will only hold unscored portions
+
+    # Iterate through sent_scores, only looking at phrases
+    for term in sent_scores:
+        if len(term.split()) > 1: # Pick out phrases in sent_scores
+            if term.replace("'", '') in tweet_left: # Also removes apostrophe when searching for matches becuase our clean tweets have them removed
+                score += sent_scores[term]
+                tweet_left = tweet_left.replace(term.replace("'", ''), '')
     
-    # YOUR CODE GOES HERE
-    
+    # Iterate through sent_scores, only looking at words
+    for term in sent_scores:
+        if len(term.split()) == 1: # Pick out words in sent_scores
+            if term.replace("'", '') in tweet_left.split(): # Split into individual words, also removes apostrophe when searching for matches becuase our clean tweets have them removed
+                score += sent_scores[term]
+                tweet_left = tweet_left.replace(term.replace("'", ''), '')
+
     return score
 
 

@@ -1,3 +1,4 @@
+# Assignment 1, Question 1; Douglas Schumacher, CS 639, February 2019
 import re
 import sys
 import json
@@ -7,12 +8,12 @@ def preprocess_word(word):
     word = word.strip('\'"?!,.():;')
 
     # Convert more than 2 letter repetitions to 2 letter. Example: funnnnny --> funny
-    #TODO: The next line should implement the functionality in the above comment.
-    # word = YOUR CODE GOES HERE
+    word = re.sub(r'(.)\1(\1+)', r'\1\1', word)
 
     # Remove - & '
-    # TODO: The next line should implement the functionality in the above comment.
-    # word = YOUR CODE GOES HERE
+    word = word.replace('-', '')
+    word = word.replace('&', '')
+    word = word.replace("'", '')
     return word
 
 
@@ -47,13 +48,13 @@ def preprocess_tweet(tweet):
     tweet = re.sub(r'@[\S]+', '', tweet)
 
     # Replaces #hashtag with hashtag. Example #DataScience should be DataScience
-    tweet = re.sub(r'#[\S]+', '', tweet)   
+    tweet = re.sub(r'#', '', tweet)   
 
     # Remove RT (retweet)
     tweet = re.sub(r'rt', '', tweet)
     
     # Replace 2+ dots with space
-    tweet = re.sub(r'[\.] + [\.]', '', tweet)
+    tweet = re.sub(r'(\.)\1(\1+)', ' ', tweet)
     
     # Strip space, " and ' from tweet
     tweet = tweet.strip(' "\'')

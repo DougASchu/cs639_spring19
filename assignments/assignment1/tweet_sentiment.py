@@ -38,16 +38,16 @@ def get_tweet_sentiment(tweet, sent_scores):
     # Iterate through sent_scores, only looking at phrases
     for term in sent_scores:
         if len(term.split()) > 1: # Pick out phrases in sent_scores
-            if term.replace("'", '') in tweet_left: # Also removes apostrophe when searching for matches becuase our clean tweets have them removed
+            if term in tweet_left: # Also removes apostrophe when searching for matches becuase our clean tweets have them removed
                 score += sent_scores[term]
-                tweet_left = tweet_left.replace(term.replace("'", ''), '')
+                tweet_left = tweet_left.replace(term, '')
     
     # Iterate through sent_scores, only looking at words
     for term in sent_scores:
         if len(term.split()) == 1: # Pick out words in sent_scores
-            if term.replace("'", '') in tweet_left.split(): # Split into individual words, also removes apostrophe when searching for matches becuase our clean tweets have them removed
+            if term in tweet_left.split(): # Split into individual words, also removes apostrophe when searching for matches because our clean tweets have them removed
                 score += sent_scores[term]
-                tweet_left = tweet_left.replace(term.replace("'", ''), '')
+                tweet_left = tweet_left.replace(term, '')
 
     return score
 

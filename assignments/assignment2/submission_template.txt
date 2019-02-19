@@ -108,7 +108,12 @@
     <!-- BEGIN PROBLEM 3 -->
     <answer number="3a">
         <!-- Paste your solution to problem 3, part (a) below this line. --><![CDATA[
-
+            
+            SELECT X.i, sum(X.val * MODEL.val) as val
+            FROM X, MODEL
+            WHERE (X.j = MODEL.j)
+            GROUP BY X.i
+            LIMIT 5;
 
 
         ]]><!-- End problem 3, part (a). -->
@@ -116,6 +121,13 @@
     <answer number="3b">
         <!-- Paste your solution to problem 3, part (b) below this line. --><![CDATA[
 
+            DROP VIEW IF EXISTS PREDICTION;
+            CREATE VIEW PREDICTION AS
+            SELECT ANSWER_P3a.i, CASE
+                WHEN ANSWER_P3a.val > 0 THEN 1
+                WHEN ANSWER_P3a.val <= 0 THEN 0
+                END as 'val'
+            FROM ANSWER_P3a;
 
 
         ]]><!-- End problem 3, part (b). -->
@@ -123,7 +135,13 @@
     <answer number="3c">
         <!-- Paste your solution to problem 3, part (c) below this line. --><![CDATA[
 
-
+            SELECT ((1.0 / count(correct)) * sum(correct)) as accuracy
+            FROM (SELECT CASE
+                    WHEN IRIS.label = ANSWER_P3b.val THEN 1
+                    WHEN IRIS.label != ANSWER_P3b.val THEN 0
+                    END as 'correct'
+                FROM IRIS, ANSWER_P3b
+                WHERE IRIS.i = ANSWER_P3b.i);
 
         ]]><!-- End problem 3, part (c). -->
     </answer>

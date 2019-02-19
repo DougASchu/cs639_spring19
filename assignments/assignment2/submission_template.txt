@@ -33,9 +33,9 @@
     <answer number="1a">
         <!-- Paste your solution to problem 1, part (a) below this line. --><![CDATA[
         
-        SELECT A.i, A.j, A.val * B.val AS val 
-        FROM A,B 
-        WHERE A.i = B.i AND A.j = B.j;
+            SELECT A.i, A.j, A.val * B.val AS val 
+            FROM A,B 
+            WHERE A.i = B.i AND A.j = B.j;
 
 
         ]]><!-- End problem 1, part (a). -->
@@ -54,10 +54,13 @@
     <answer number="1c">
         <!-- Paste your solution to problem 1, part (c) below this line. --><![CDATA[
 
-            SELECT C.pi AS i, A.j, A.val 
-            FROM A,C 
-            WHERE A.i = C.ind 
-            ORDER BY C.pi;
+            SELECT C.ind AS i, A2.j, A2.val 
+            FROM (SELECT C1.ind AS i, A1.j, A1.val 
+                FROM A AS A1, C AS C1
+                WHERE A1.i = C1.pi 
+                ORDER BY C1.ind) as A2, C 
+            WHERE A2.i = C.pi 
+            ORDER BY C.ind;
 
 
         ]]><!-- End problem 1, part (c). -->
@@ -152,7 +155,13 @@
     <answer number="bonus1">
         <!-- Paste your solution to bonus problem 1 below this line. --><![CDATA[
 
-
+            SELECT MODEL.j, (MODEL.val + inner_sum) as val
+            FROM (SELECT (0.0001 * (sum(IRIS.label - ANSWER_P3b.val) * (X.val))) as inner_sum
+                FROM IRIS, ANSWER_P3b, X, MODEL
+                WHERE IRIS.i = ANSWER_P3b.i AND X.i = ANSWER_P3b.i
+                GROUP BY X.j), MODEL, X
+            WHERE X.j = MODEL.j
+            GROUP BY MODEL.j;
 
         ]]><!-- End bonus problem 1. -->
     </answer>

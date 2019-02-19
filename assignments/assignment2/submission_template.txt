@@ -20,11 +20,11 @@
     <student>
         <name>
             <!-- Insert your full name on the line below. -->
-            
+            Douglas Schumacher
         </name>
         <sunet>
             <!-- Insert your UWNet ID (NOT your student ID number!) below. -->
-
+            dschumacher4
         </sunet>
     </student>
 
@@ -32,14 +32,21 @@
     <!-- BEGIN PROBLEM 1 -->
     <answer number="1a">
         <!-- Paste your solution to problem 1, part (a) below this line. --><![CDATA[
-
+        
+        SELECT A.i, A.j, A.val * B.val AS val 
+        FROM A,B 
+        WHERE A.i = B.i AND A.j = B.j;
 
 
         ]]><!-- End problem 1, part (a). -->
     </answer>
     <answer number="1b">
         <!-- Paste your solution to problem 1, part (b) below this line. --><![CDATA[
-
+            
+            SELECT C.ind AS i, A.j, A.val 
+            FROM A,C 
+            WHERE A.i = C.pi 
+            ORDER BY C.ind;
 
 
         ]]><!-- End problem 1, part (b). -->
@@ -47,6 +54,10 @@
     <answer number="1c">
         <!-- Paste your solution to problem 1, part (c) below this line. --><![CDATA[
 
+            SELECT C.pi AS i, A.j, A.val 
+            FROM A,C 
+            WHERE A.i = C.ind 
+            ORDER BY C.pi;
 
 
         ]]><!-- End problem 1, part (c). -->
@@ -54,6 +65,11 @@
     <answer number="1d">
         <!-- Paste your solution to problem 1, part (d) below this line. --><![CDATA[
 
+            SELECT a1.i, a1.j, a2.val as val
+            FROM A AS a1, A AS a2
+            WHERE (a1.i = a2.i AND (a1.j = a2.j OR a1.j = a2.j + 1 OR a1.j = a2.j - 1)) OR (a1.j = a2.j AND (a1.i = a2.i OR a1.i = a2.i + 1 OR a1.i = a2.i - 1))
+            GROUP BY a1.i, a1.j 
+            HAVING max(a2.val);
 
 
         ]]><!-- End problem 1, part (d). -->
@@ -65,13 +81,23 @@
     <answer number="2a">
         <!-- Paste your solution to problem 2, part (a) below this line. --><![CDATA[
 
+            SELECT region, count(state) as num_state_winners
+            FROM energy
+            WHERE solar = (SELECT max(solar) FROM energy) OR wind = (SELECT max(wind) FROM energy) OR hydro = (SELECT max(hydro) FROM energy) OR nuclear = (SELECT max(nuclear) FROM energy)
+            GROUP BY region
+            ORDER BY 2 DESC;
 
 
         ]]><!-- End problem 2, part (a). -->
     </answer>
     <answer number="2b">
         <!-- Paste your solution to problem 2, part (b) below this line. --><![CDATA[
-
+                
+                SELECT state, solar, wind
+                FROM energy
+                WHERE solar = (SELECT max(solar) FROM energy) OR wind = (SELECT max(solar + wind) FROM energy)
+                GROUP BY state
+                ORDER BY (solar + wind) DESC;
 
 
         ]]><!-- End problem 2, part (b). -->

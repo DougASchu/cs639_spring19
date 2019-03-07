@@ -20,22 +20,23 @@ def mapper(record):
   value = record[3]
   if matrix_name == 'a':
     for k in range(5):
-      mr.emit_intermediate((i, k), (m, j, value))
+      mr.emit_intermediate((i, k), value)
   if matrix_name == 'b':
     for k in range(5):
-      mr.emit_intermediate((j, k), (i, value)
+      mr.emit_intermediate((k, j), value)
     
 
 # Implement the REDUCE function
 def reducer(key, list_of_values):
     # YOUR CODE GOES HERE
+    i = key[0]
+    k = key[1]
     total = 0
-    final_matrix_entry = []
-    for entry1 in list_of_values:
-      for entry2 in list_of_values:
-        if entry2[1] == entry1[1]:
-          total += entry2[1] * entry1[1]
-    final_matrix_entry = [key[0], key[1], total]
+    # This is needed to correctly match values for multiplication, thus this program only works for 5x5 matricies
+    matrix_size = 5
+    for index in range(matrix_size): 
+      total += (list_of_values[index] * list_of_values[(index + matrix_size)])
+    final_matrix_entry = [i, k, total]
     mr.emit(final_matrix_entry)
 
 # Do not modify below this line
